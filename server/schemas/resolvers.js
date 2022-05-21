@@ -8,7 +8,8 @@ const resolvers = {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
           .select("-__v -password")
-          .populate("savedBooks");
+          //.populate("savedBooks");
+          console.log(userData);
 
         return userData;
       }
@@ -16,12 +17,11 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     users: async () => {
-      return User.find().select("-__v -password").populate("savedBooks");
+      return User.find().select("-__v -password");
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
-        .select("-__v -password")
-        .populate("savedBooks");
+        .select("-__v -password");
     },
   },
   Mutation: {
@@ -56,6 +56,7 @@ const resolvers = {
           { $addToSet: { savedBooks: book } },
           { new: true, runValidators: true }
         );
+        console.log(user);
 
         return user;
       }
