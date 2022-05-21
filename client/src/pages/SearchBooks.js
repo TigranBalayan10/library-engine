@@ -92,8 +92,7 @@ const SearchBooks = () => {
     try {
       const response = await saveBookMutation({
         variables: {
-          book: bookToSave,
-          token,
+          book: bookToSave
         },
       });
       console.log(response);
